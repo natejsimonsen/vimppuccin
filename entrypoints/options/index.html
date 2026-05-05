@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vimppuccin — Settings</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Vimppuccin</h1>
+        <p class="tag">Vim-mode browser shortcuts. Catppuccin colors. Zero telemetry.</p>
+      </header>
+
+      <section>
+        <h2>Theme</h2>
+        <label for="flavor">Catppuccin flavor</label>
+        <select id="flavor">
+          <option value="latte">Latte (light)</option>
+          <option value="frappe">Frappé</option>
+          <option value="macchiato">Macchiato</option>
+          <option value="mocha">Mocha (default)</option>
+        </select>
+        <p class="hint">Saved to <code>chrome.storage.local</code>. Never synced.</p>
+      </section>
+
+      <section>
+        <h2>Keymap</h2>
+        <dl id="keymap"></dl>
+      </section>
+
+      <section>
+        <h2>Privacy</h2>
+        <ul class="privacy">
+          <li>No analytics. No telemetry. No crash reporting.</li>
+          <li>No outbound network requests of any kind.</li>
+          <li>Settings stored only on this device.</li>
+          <li>Source code: <a id="repo" href="https://github.com/natejsimonsen/vimppuccin" target="_blank" rel="noopener">github.com/natejsimonsen/vimppuccin</a></li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>MIT licensed. Catppuccin palette © Catppuccin contributors (MIT).</p>
+      </footer>
+    </main>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
