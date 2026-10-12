@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Legacy (API 24-25) launcher icon: the mark on a round Mocha background. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="48dp"
     android:height="48dp"
@@ -8,12 +9,12 @@
         android:fillColor="@color/icon_background"
         android:pathData="M24,24m-24,0a24,24 0,1 1,48 0a24,24 0,1 1,-48 0" />
     <group
-        android:scaleX="1.25"
-        android:scaleY="1.25"
-        android:translateX="9"
-        android:translateY="9">
+        android:scaleX="1.4"
+        android:scaleY="1.4"
+        android:translateX="7.2"
+        android:translateY="6.85">
         <path
             android:fillColor="@color/icon_foreground"
-            android:pathData="M12,1L3,5v6c0,5.55 3.84,10.74 9,12 5.16,-1.26 9,-6.45 9,-12V5L12,1zM10,17l-4,-4 1.41,-1.41L10,14.17l6.59,-6.59L18,9l-8,8z" />
+            android:pathData="M6,3H7.6L12,11L16.4,3H18Q20,3 20,5V11.2C20,16 16.6,20 12,21.5C7.4,20 4,16 4,11.2V5Q4,3 6,3Z" />
     </group>
 </vector>

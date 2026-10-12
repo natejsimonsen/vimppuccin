@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logo.svg" width="96" alt="Vimppuccin logo"></p>
+
 # Vimppuccin
 
 A free, open-source, no-root **ad blocker for Android**, themed in [Catppuccin](https://github.com/catppuccin/catppuccin). No telemetry, no analytics, no accounts. MIT-licensed.
