@@ -96,11 +96,11 @@ class DnsTunnel(
     private fun handlePacket(buf: ByteArray, len: Int) {
         when (val verdict = filter.handle(buf, len)) {
             is DnsPacketFilter.Verdict.Block -> {
-                BlockerState.recordQuery(verdict.domain)
+                BlockerState.recordQuery(verdict.domain, blocked = true)
                 writeToTun(verdict.response)
             }
             is DnsPacketFilter.Verdict.Forward -> {
-                BlockerState.recordQuery(null)
+                BlockerState.recordQuery(verdict.domain, blocked = false)
                 try {
                     forwarders.execute { forward(verdict.packet) }
                 } catch (_: RejectedExecutionException) {

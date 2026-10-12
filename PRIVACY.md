@@ -7,7 +7,7 @@ Vimppuccin is built around one rule: **your browsing data stays on your device.*
 - No analytics, metrics, usage tracking or crash reporting.
 - No accounts and no identifiers, generated or collected.
 - No remote VPN server. The VPN runs entirely on your phone.
-- No logging of your DNS queries to disk. The "Recently blocked" list lives only in memory and is gone when the app stops.
+- No logging of your DNS queries to disk. The "Recent lookups" list lives only in memory and is gone when the app stops.
 - No third-party SDKs or libraries beyond AndroidX and Kotlin coroutines.
 
 ## Network connections the app makes

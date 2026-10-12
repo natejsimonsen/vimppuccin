@@ -36,7 +36,8 @@
     <string name="sources_hint">One HTTPS URL per line (hosts files or domain lists)</string>
     <string name="save">Save</string>
 
-    <string name="recent_title">Recently blocked</string>
-    <string name="recent_empty">Nothing blocked yet.</string>
+    <string name="recent_title">Recent lookups</string>
+    <string name="recent_hint">✕ blocked · ✓ allowed. If ads still show, the ✓ domains that appear with them are the ones to add to your custom blocklist.</string>
+    <string name="recent_empty">No lookups yet.</string>
     <string name="tips">Tips: turn off Settings › Network › Private DNS (or set it to Automatic) and disable “secure DNS” in your browser, otherwise those lookups skip the blocker. Enable Always-on VPN in Settings to start blocking at boot.</string>
 </resources>

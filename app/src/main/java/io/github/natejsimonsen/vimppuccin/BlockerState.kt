@@ -13,10 +13,13 @@ object BlockerState {
         val queries: Long = 0,
         val blocked: Long = 0,
         val listSize: Int = 0,
-        val recentBlocked: List<String> = emptyList(),
+        val recent: List<Query> = emptyList(),
     )
 
-    private const val RECENT_LIMIT = 50
+    /** A recent lookup; consecutive repeats of the same lookup are folded into [count]. */
+    data class Query(val domain: String, val blocked: Boolean, val count: Int = 1)
+
+    private const val RECENT_LIMIT = 100
 
     private val _status = MutableStateFlow(Status.STOPPED)
     val status: StateFlow<Status> = _status.asStateFlow()
@@ -32,15 +35,17 @@ object BlockerState {
 
     fun resetCounters() = _stats.update { Stats(listSize = it.listSize) }
 
-    fun recordQuery(blockedDomain: String?) = _stats.update { s ->
-        if (blockedDomain == null) {
-            s.copy(queries = s.queries + 1)
-        } else {
-            s.copy(
-                queries = s.queries + 1,
-                blocked = s.blocked + 1,
-                recentBlocked = (listOf(blockedDomain) + s.recentBlocked).take(RECENT_LIMIT),
-            )
+    fun recordQuery(domain: String?, blocked: Boolean) = _stats.update { s ->
+        val recent = when {
+            domain == null -> s.recent
+            s.recent.firstOrNull()?.let { it.domain == domain && it.blocked == blocked } == true ->
+                listOf(s.recent[0].copy(count = s.recent[0].count + 1)) + s.recent.drop(1)
+            else -> (listOf(Query(domain, blocked)) + s.recent).take(RECENT_LIMIT)
         }
+        s.copy(
+            queries = s.queries + 1,
+            blocked = if (blocked) s.blocked + 1 else s.blocked,
+            recent = recent,
+        )
     }
 }

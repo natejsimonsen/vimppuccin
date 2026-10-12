@@ -5,7 +5,10 @@ import android.content.Intent
 import android.net.VpnService
 import android.os.Bundle
 import android.text.InputType
+import android.text.SpannableStringBuilder
+import android.text.Spanned
 import android.text.format.DateUtils
+import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
@@ -132,11 +135,25 @@ class MainActivity : ComponentActivity() {
         } else {
             getString(R.string.list_size_unknown)
         }
-        recentText.text = if (stats.recentBlocked.isEmpty()) {
-            getString(R.string.recent_empty)
-        } else {
-            stats.recentBlocked.joinToString("\n")
+        recentText.text = if (stats.recent.isEmpty()) getString(R.string.recent_empty) else formatRecent(stats.recent)
+    }
+
+    /** Blocked lookups in red with ✕, allowed ones with ✓, so leaks are easy to spot. */
+    private fun formatRecent(recent: List<BlockerState.Query>): CharSequence {
+        val out = SpannableStringBuilder()
+        val blockedColor = getColor(R.color.red)
+        val allowedColor = getColor(R.color.text)
+        for ((i, q) in recent.withIndex()) {
+            if (i > 0) out.append('\n')
+            val start = out.length
+            out.append(if (q.blocked) "✕ " else "✓ ").append(q.domain)
+            if (q.count > 1) out.append(" ×").append(q.count.toString())
+            out.setSpan(
+                ForegroundColorSpan(if (q.blocked) blockedColor else allowedColor),
+                start, out.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE,
+            )
         }
+        return out
     }
 
     private fun renderLastUpdated() {
