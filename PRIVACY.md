@@ -16,7 +16,7 @@ Vimppuccin is built around one rule: **your browsing data stays on your device.*
 | --- | --- | --- |
 | Your network's DNS server (e.g. your router or carrier) | For every DNS lookup that is **not** blocked | Forwards the lookup exactly as Android would without the blocker. |
 | `1.1.1.1` / `9.9.9.9` | Only if the current network reports no DNS servers | Fallback resolver so lookups still work. |
-| The URLs under **Blocklist sources** (default: `raw.githubusercontent.com/StevenBlack/hosts`) | Only when you tap **Download / update blocklists** | Fetches the blocklist. Nothing about you is sent beyond a normal HTTPS request. |
+| The URLs under **Blocklist sources** (default: HaGeZi and StevenBlack lists on `raw.githubusercontent.com`) | Only when you tap **Download / update blocklists** | Fetches the blocklist. Nothing about you is sent beyond a normal HTTPS request. |
 
 ## VPN permission
 

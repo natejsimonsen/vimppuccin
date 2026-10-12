@@ -61,11 +61,26 @@ juicyads.com
 trafficjunky.net
 hilltopads.net
 
-# Mobile in-app ad SDKs
+# Mobile in-app ad SDKs and mediation networks. Games usually mediate
+# several networks, so blocking just one lets the next one fill the slot.
 ads.mopub.com
 applovin.com
 applvn.com
 unityads.unity3d.com
+unityads.unitychina.cn
+mediation.unity3d.com
+isx.unity3d.com
+ironsrc.com
+is.com
+liftoff.io
+liftoff-creatives.io
+mintegral.com
+mtgglobals.com
+rayjump.com
+pangle.io
+pangolin-sdk-toutiao.com
+moloco.com
+inner-active.mobi
 adcolony.com
 chartboost.com
 vungle.com

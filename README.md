@@ -33,7 +33,7 @@ This blocks ads and trackers in **every app and browser**, not just one browser.
 ## Features
 
 - System-wide DNS-based blocking without root
-- Default list: [StevenBlack unified hosts](https://github.com/StevenBlack/hosts) (ads + malware). Add any HTTPS hosts file or domain list under **Blocklist sources**.
+- Default lists: [HaGeZi Multi PRO mini](https://github.com/hagezi/dns-blocklists) (covers in-app ad SDKs and mediation networks) and [StevenBlack unified hosts](https://github.com/StevenBlack/hosts) (ads + malware). Add any HTTPS hosts file or domain list under **Blocklist sources**.
 - Reads hosts files (`0.0.0.0 domain`), plain domain lists and `||domain^` Adblock rules
 - Your own **allowlist** (never block) and **custom blocklist**
 - Live counters and a list of recently blocked domains
@@ -45,6 +45,8 @@ This blocks ads and trackers in **every app and browser**, not just one browser.
 - Ads served from the **same domain as the content** can't be blocked by DNS. YouTube video ads are the usual example.
 - Only one VPN can be active at a time, so Vimppuccin can't run alongside another VPN app.
 - Apps that use their own DNS-over-HTTPS or hardcoded resolvers bypass the blocker.
+- **In-app ads can survive for a while after you turn blocking on.** Ad SDKs download ads ahead of time and keep connections open. Force-stop the app and clear its cache (*Settings › Apps › the app › Storage › Clear cache*) after starting Vimppuccin.
+- Games usually run several ad networks through mediation. If one network is blocked, the next one fills the slot, so check **Recently blocked** for networks that still get through and add them to your custom blocklist.
 
 ## Build
 

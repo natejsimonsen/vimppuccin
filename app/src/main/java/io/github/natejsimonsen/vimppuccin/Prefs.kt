@@ -30,6 +30,10 @@ class Prefs(context: Context) {
         private const val KEY_SOURCES = "sources"
         private const val KEY_LAST_UPDATED = "last_updated"
 
-        const val DEFAULT_SOURCES = "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
+        const val DEFAULT_SOURCES =
+            // Wildcard list: each entry blocks the domain and all its subdomains, which
+            // covers the many hostnames used by mobile ad SDKs and mediation networks.
+            "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/pro.mini-onlydomains.txt\n" +
+                "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts"
     }
 }
