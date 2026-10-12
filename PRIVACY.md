@@ -1,45 +1,40 @@
 # Privacy
 
-Vimppuccin is built around a single rule: **nothing leaves your browser.**
+Vimppuccin is built around one rule: **your browsing data stays on your device.**
 
-## What the extension does *not* do
+## What the app does *not* do
 
-- No analytics. No metrics. No usage tracking. No event reporting.
-- No telemetry. No crash reporting. No "anonymous diagnostic data."
-- No remote configuration. No A/B tests.
-- No `fetch`, no `XMLHttpRequest`, no `WebSocket`, no `navigator.sendBeacon`. Searchable: `grep -RIn 'fetch\|XMLHttpRequest\|WebSocket\|sendBeacon' src entrypoints` returns nothing.
-- No third-party scripts. The `content_security_policy` is `script-src 'self'; object-src 'self'`.
-- No `chrome.storage.sync` — settings never traverse Google's infrastructure.
-- No external fonts or stylesheets. UI uses the system monospace stack.
-- No identifiers generated, stored, or transmitted.
+- No analytics, metrics, usage tracking or crash reporting.
+- No accounts and no identifiers, generated or collected.
+- No remote VPN server. The VPN runs entirely on your phone.
+- No logging of your DNS queries to disk. The "Recently blocked" list lives only in memory and is gone when the app stops.
+- No third-party SDKs or libraries beyond AndroidX and Kotlin coroutines.
 
-## What the extension *does* do
+## Network connections the app makes
 
-- Reads the DOM of pages you load, **only while you're on the page**, **only to find clickable elements when you press `f` / `F`** and to keep its keyboard handler alive. The DOM data never leaves the page's tab.
-- Listens for keypresses on the page so it can implement vim-style scrolling and link hints. Modifier-key combinations (Ctrl/Alt/Cmd) are never intercepted.
-- Stores your chosen Catppuccin flavor in `chrome.storage.local`, which lives on your device only.
+| Connection | When | Why |
+| --- | --- | --- |
+| Your network's DNS server (e.g. your router or carrier) | For every DNS lookup that is **not** blocked | Forwards the lookup exactly as Android would without the blocker. |
+| `1.1.1.1` / `9.9.9.9` | Only if the current network reports no DNS servers | Fallback resolver so lookups still work. |
+| The URLs under **Blocklist sources** (default: `raw.githubusercontent.com/StevenBlack/hosts`) | Only when you tap **Download / update blocklists** | Fetches the blocklist. Nothing about you is sent beyond a normal HTTPS request. |
 
-## Permissions in `manifest.json`, explained
+## VPN permission
 
-| Permission                     | Why                                                                                |
-| ------------------------------ | ---------------------------------------------------------------------------------- |
-| `"storage"`                    | To remember your selected theme flavor across sessions, on-device.                 |
-| `"host_permissions": ["<all_urls>"]` | Required to inject the keyboard handler/content script into the pages you visit. It is **not** used to read or transmit page contents. |
+Android requires VPN permission for any app that intercepts DNS without root. Vimppuccin routes only one internal address (`10.111.222.2`, the fake DNS server) through the VPN. All other traffic bypasses it and is never read.
 
-The extension does **not** request `tabs`, `activeTab`, `cookies`, `webRequest`, `webNavigation`, `history`, `bookmarks`, `downloads`, `identity`, or `clipboardRead`/`clipboardWrite`.
+## Permissions
 
-## Reproducible builds
+| Permission | Why |
+| --- | --- |
+| `INTERNET` | Forward allowed DNS queries and download blocklists. |
+| `ACCESS_NETWORK_STATE` | Find the current network's DNS servers to use as the upstream resolver. |
+| `BIND_VPN_SERVICE` (held by the system, not the app) | Lets Android start the local VPN service. |
+| `BIND_QUICK_SETTINGS_TILE` (held by the system) | Lets Android show the Quick Settings tile. |
 
-Releases are built from a tagged commit with `npm run build && npm run zip`. The build is deterministic given the same `package-lock.json`. To verify a release matches the source:
+## Storage
 
-```bash
-git checkout v<tag>
-npm ci
-npm run build && npm run zip
-sha256sum .output/vimppuccin-*-chrome.zip
-# compare with the SHA256 attached to the GitHub release
-```
+Your allowlist, custom blocklist, blocklist sources and the downloaded list are stored in the app's private storage. Backups are disabled (`allowBackup="false"`).
 
 ## Reporting
 
-If you find anything that contradicts this document, open an issue at <https://github.com/natejsimonsen/vimppuccin/issues>. This policy is part of the source tree; changes are visible in `git log PRIVACY.md`.
+If anything contradicts this document, open an issue at <https://github.com/natejsimonsen/vimppuccin/issues>.

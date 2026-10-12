@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Catppuccin Latte (light). Mocha overrides live in values-night. -->
+<resources>
+    <color name="base">#EFF1F5</color>
+    <color name="mantle">#E6E9EF</color>
+    <color name="surface0">#CCD0DA</color>
+    <color name="text">#4C4F69</color>
+    <color name="subtext">#6C6F85</color>
+    <color name="mauve">#8839EF</color>
+    <color name="on_mauve">#EFF1F5</color>
+    <color name="green">#40A02B</color>
+    <color name="red">#D20F39</color>
+    <color name="peach">#FE640B</color>
+    <color name="icon_background">#1E1E2E</color>
+    <color name="icon_foreground">#CBA6F7</color>
+</resources>

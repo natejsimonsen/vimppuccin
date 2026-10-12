@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vimppuccin</string>
+    <string name="tagline">Ad blocker</string>
+    <string name="tile_label">Ad blocking</string>
+
+    <string name="status_stopped">Not blocking</string>
+    <string name="status_starting">Starting…</string>
+    <string name="status_running">Blocking ads</string>
+    <string name="start">Start blocking</string>
+    <string name="stop">Stop blocking</string>
+    <string name="vpn_permission_denied">Vimppuccin needs VPN permission to filter DNS. Nothing leaves your device through it.</string>
+
+    <string name="queries_label">DNS queries</string>
+    <string name="blocked_label">Blocked</string>
+    <string name="list_size">%1$s domains on the blocklist</string>
+    <string name="list_size_unknown">Start blocking to load the blocklist</string>
+
+    <string name="blocklists">Blocklists</string>
+    <string name="never_updated">Using the built-in list. Download the full list for better coverage.</string>
+    <string name="last_updated">Updated %1$s</string>
+    <string name="update_lists">Download / update blocklists</string>
+    <string name="updating">Downloading…</string>
+    <string name="update_ok">Blocklist updated: %1$s domains</string>
+    <string name="update_partial">Blocklist updated: %1$s domains (%2$d source(s) failed)</string>
+    <string name="update_failed">Update failed: %1$s</string>
+
+    <string name="edit_allowlist">Allowlist (never block)</string>
+    <string name="edit_custom">Custom blocklist</string>
+    <string name="edit_sources">Blocklist sources</string>
+    <string name="allowlist_title">Allowlist</string>
+    <string name="allowlist_hint">One domain per line, e.g.\nexample.com\nSubdomains are included.</string>
+    <string name="custom_title">Custom blocklist</string>
+    <string name="custom_hint">One domain per line, e.g.\nads.example.com</string>
+    <string name="sources_title">Blocklist sources</string>
+    <string name="sources_hint">One HTTPS URL per line (hosts files or domain lists)</string>
+    <string name="save">Save</string>
+
+    <string name="recent_title">Recently blocked</string>
+    <string name="recent_empty">Nothing blocked yet.</string>
+    <string name="tips">Tips: turn off Settings › Network › Private DNS (or set it to Automatic) and disable “secure DNS” in your browser, otherwise those lookups skip the blocker. Enable Always-on VPN in Settings to start blocking at boot.</string>
+</resources>

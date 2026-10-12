@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Vimppuccin" parent="android:Theme.Material.NoActionBar">
+        <item name="android:colorPrimary">@color/mauve</item>
+        <item name="android:colorPrimaryDark">@color/mantle</item>
+        <item name="android:colorAccent">@color/mauve</item>
+        <item name="android:windowBackground">@color/base</item>
+        <item name="android:statusBarColor">@color/base</item>
+        <item name="android:navigationBarColor">@color/base</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColorPrimary">@color/text</item>
+        <item name="android:textColorSecondary">@color/subtext</item>
+    </style>
+</resources>

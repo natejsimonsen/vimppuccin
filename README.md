@@ -1,109 +1,71 @@
 # Vimppuccin
 
-Vim-mode browser shortcuts in a [Catppuccin](https://github.com/catppuccin/catppuccin) palette. Free, open source, MIT-licensed. Zero telemetry, zero analytics, zero outbound network calls.
+A free, open-source, no-root **ad blocker for Android**, themed in [Catppuccin](https://github.com/catppuccin/catppuccin). No telemetry, no analytics, no accounts. MIT-licensed.
 
-> Status: v0.1 — early. Chromium (Chrome / Edge / Brave / Arc) only. Manifest V3.
+> Status: v0.2, early. Android 7.0+ (API 24).
 
-## Install (v0.1, unpacked)
+## How it works
 
-1. Download the latest `vimppuccin-<version>.zip` from [Releases](https://github.com/natejsimonsen/vimppuccin/releases) and extract it, **or** clone this repo and run `npm install && npm run build` (output goes to `.output/chrome-mv3/`).
-2. Visit `chrome://extensions`.
-3. Enable **Developer mode** (top right).
-4. Click **Load unpacked** and select the build directory.
+Vimppuccin runs a **local VPN that only handles DNS**. Nothing is sent to a remote VPN server.
 
-A Chrome Web Store listing may follow once the project stabilizes; see [`PRIVACY.md`](./PRIVACY.md) before that happens.
+1. Android is told to use a fake DNS server (`10.111.222.2`) that only exists inside the VPN. Only that one address is routed through the tunnel. All your other traffic uses the normal network and is never touched.
+2. Each DNS lookup is checked against the blocklist on your device.
+   - **Blocked domain:** the app answers `NXDOMAIN` right away, so the ad or tracker never loads.
+   - **Anything else:** the query goes to your network's normal DNS server and the answer is passed back.
+3. Matching includes subdomains: blocking `doubleclick.net` also blocks `stats.g.doubleclick.net`.
 
-## Keymap
+This blocks ads and trackers in **every app and browser**, not just one browser.
 
-| Keys      | Action                                |
-| --------- | ------------------------------------- |
-| `j` / `k` | scroll down / up                      |
-| `h` / `l` | scroll left / right                   |
-| `d` / `u` | scroll half page down / up            |
-| `gg`      | scroll to top                         |
-| `G`       | scroll to bottom                      |
-| `f`       | show link hints (activate in current tab) |
-| `F`       | show link hints (activate in new tab) |
-| `?`       | toggle keymap overlay                 |
-| `i`       | enter insert mode (passthrough)       |
-| `Esc`     | exit hints / help / back to normal    |
+## Install
 
-Modifier keys (`Ctrl`/`Alt`/`Cmd`) are never intercepted — your browser shortcuts work as-is. When focus is on a text input, textarea, contenteditable, or `<select>`, Vimppuccin automatically yields (insert mode); press `Esc` to return to normal.
+1. Get `vimppuccin-debug-apk` from the latest [Actions run](https://github.com/natejsimonsen/vimppuccin/actions/workflows/android.yml), **or** build it yourself (see below).
+2. Install the APK on your phone (you may need to allow installs from unknown sources).
+3. Open Vimppuccin, tap **Start blocking** and accept the VPN prompt.
+4. Tap **Download / update blocklists** to fetch the full list. Until then a small built-in list is used.
 
-### Link hints
+### Recommended settings
 
-The headline feature. Press `f` and a small label appears next to every clickable element. Type the label to activate.
+- **Private DNS:** set *Settings › Network & internet › Private DNS* to **Off** or **Automatic**. In "Private DNS provider hostname" mode, Android sends DNS straight to that provider and skips the blocker.
+- **Browser secure DNS (DoH):** turn off "Use secure DNS" in Chrome, Firefox and similar browsers for the same reason.
+- **Start at boot:** in *Settings › Network & internet › VPN › Vimppuccin ⚙*, turn on **Always-on VPN**.
+- **Quick Settings tile:** add the "Ad blocking" tile to switch blocking on or off from the notification shade.
 
-The labels follow a hybrid scheme:
+## Features
 
-- A label is the first two alphabetic characters of the link's visible text (`About` → `ab`, `Contact us` → `co`, `1. Item` → `it`).
-- If two links would collide on the same prefix, the second one (and any further duplicates) gets a random unused label drawn from the home row: `asdfghjkl`.
-- Labels with no extractable text fall back to random home-row labels.
+- System-wide DNS-based blocking without root
+- Default list: [StevenBlack unified hosts](https://github.com/StevenBlack/hosts) (ads + malware). Add any HTTPS hosts file or domain list under **Blocklist sources**.
+- Reads hosts files (`0.0.0.0 domain`), plain domain lists and `||domain^` Adblock rules
+- Your own **allowlist** (never block) and **custom blocklist**
+- Live counters and a list of recently blocked domains
+- Quick Settings tile and Always-on VPN support
+- Catppuccin Latte (light) and Mocha (dark), following the system theme
 
-This keeps the most-frequent links memorable across sessions while guaranteeing every label is unique on every page.
+## Limitations
 
-`F` is the same flow but opens anchor links in a new tab via `window.open`.
+- Ads served from the **same domain as the content** can't be blocked by DNS. YouTube video ads are the usual example.
+- Only one VPN can be active at a time, so Vimppuccin can't run alongside another VPN app.
+- Apps that use their own DNS-over-HTTPS or hardcoded resolvers bypass the blocker.
 
-## Theme
+## Build
 
-All four Catppuccin flavors are bundled. Open the extension's options page from `chrome://extensions` to switch.
-
-- Latte (light)
-- Frappé
-- Macchiato
-- **Mocha** (default)
-
-Setting is stored in `chrome.storage.local` only — never `chrome.storage.sync`.
-
-## Privacy
-
-See [`PRIVACY.md`](./PRIVACY.md) for the full statement. Short version:
-
-- The extension declares only `storage` and `host_permissions: ["<all_urls>"]`. The latter is required to inject the keyboard handler on web pages; it is **not** used for any kind of data collection.
-- No `fetch`, no `XMLHttpRequest`, no analytics SDK, no Sentry, no anything. There are zero outbound network calls in the codebase. You can verify this with `grep -RIn 'fetch\|XMLHttpRequest' src entrypoints` — empty.
-- `chrome.storage.local` only. Settings never leave your device.
-- Reproducible build: clone, `npm install`, `npm run build`. The published zip is built from the tagged commit.
-
-## Build from source
-
-Requires Node 18+.
+Requires JDK 17+ and the Android SDK (API 35).
 
 ```bash
-git clone https://github.com/natejsimonsen/vimppuccin
-cd vimppuccin
-npm install        # also runs `wxt prepare` to generate types
-npm run build      # → .output/chrome-mv3/
-npm run zip        # → .output/vimppuccin-<version>-chrome.zip
-npm test           # vitest unit tests for the hint algorithm
+./gradlew :core:test          # unit tests for packet parsing, DNS and blocklist matching
+./gradlew :app:assembleDebug  # APK at app/build/outputs/apk/debug/
 ```
 
 ## Project layout
 
-```
-entrypoints/
-  content.ts                  # injected into pages; hooks keydown
-  background.ts               # MV3 service worker (currently a no-op)
-  options/                    # settings page (theme picker, keymap, privacy)
-src/
-  modes/ModeManager.ts        # normal | insert | hint | help dispatch
-  hints/
-    collect.ts                # find visible interactive elements
-    label.ts                  # the prefix-or-random labeling algorithm
-    render.ts                 # shadow-DOM overlay
-    activate.ts               # click / open-in-new-tab
-  scroll.ts                   # j/k/h/l/gg/G/d/u
-  help.ts                     # keymap data
-  storage.ts                  # typed wrapper over chrome.storage.local
-  theme/
-    flavors/                  # latte, frappe, macchiato, mocha (tokens)
-    apply.ts                  # → CSS custom properties
-```
+| Path   | What                                                                                          |
+| ------ | --------------------------------------------------------------------------------------------- |
+| `core` | Pure Kotlin/JVM: IPv4/UDP parsing, DNS question parsing, NXDOMAIN replies, hosts-file parsing, blocklist matching. Fully unit-tested. |
+| `app`  | Android app: `AdBlockVpnService` (VPN setup), `DnsTunnel` (TUN read loop and upstream forwarding), `BlocklistRepository` (bundled, downloaded and custom lists), `MainActivity`, `ToggleTileService`. |
 
-## Acknowledgements
+## Privacy
 
-- [Catppuccin](https://github.com/catppuccin/catppuccin) — pastel palette (MIT).
-- The vim-on-the-web pattern owes everything to [Vimium](https://github.com/philc/vimium), [Tridactyl](https://github.com/tridactyl/tridactyl), and [SurfingKeys](https://github.com/brookhong/Surfingkeys). This project is an independent implementation, not a fork.
+See [`PRIVACY.md`](./PRIVACY.md).
 
 ## License
 
-MIT — see [LICENSE](./LICENSE).
+MIT. See [`LICENSE`](./LICENSE).

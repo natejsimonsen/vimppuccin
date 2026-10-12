@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Catppuccin Mocha (dark). -->
+<resources>
+    <color name="base">#1E1E2E</color>
+    <color name="mantle">#181825</color>
+    <color name="surface0">#313244</color>
+    <color name="text">#CDD6F4</color>
+    <color name="subtext">#A6ADC8</color>
+    <color name="mauve">#CBA6F7</color>
+    <color name="on_mauve">#1E1E2E</color>
+    <color name="green">#A6E3A1</color>
+    <color name="red">#F38BA8</color>
+    <color name="peach">#FAB387</color>
+</resources>
